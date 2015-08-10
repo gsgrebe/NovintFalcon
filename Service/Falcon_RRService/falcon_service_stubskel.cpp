@@ -39,7 +39,6 @@ std::string out(
 "property int32 button_status\n"
 "property ControllerInput controller_input\n"
 "property int32 deadzone_enabled\n"
-"property int32 deadzone_feedback_enabled\n"
 "property int32 deadzone_size\n"
 "end object\n"
 "\n"
@@ -199,20 +198,6 @@ return RobotRaconteur::RRArrayToScalar<int32_t >(me->CastData<RobotRaconteur::RR
 void Falcon_stub::set_deadzone_enabled(int32_t value)
 {
 RR_SHARED_PTR<RobotRaconteur::MessageEntry> req=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertySetReq,"deadzone_enabled");
-req->AddElement(RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRaconteur::rr_cast<RobotRaconteur::MessageElementData>(RobotRaconteur::ScalarToRRArray<int32_t >(value))));
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> mr=ProcessTransaction(req);
-}
-
-int32_t Falcon_stub::get_deadzone_feedback_enabled()
-{
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> m=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertyGetReq,"deadzone_feedback_enabled");
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> mr=ProcessTransaction(m);
-RR_SHARED_PTR<RobotRaconteur::MessageElement> me=mr->FindElement("value");
-return RobotRaconteur::RRArrayToScalar<int32_t >(me->CastData<RobotRaconteur::RRArray<int32_t > >());
-}
-void Falcon_stub::set_deadzone_feedback_enabled(int32_t value)
-{
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> req=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertySetReq,"deadzone_feedback_enabled");
 req->AddElement(RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRaconteur::rr_cast<RobotRaconteur::MessageElementData>(RobotRaconteur::ScalarToRRArray<int32_t >(value))));
 RR_SHARED_PTR<RobotRaconteur::MessageEntry> mr=ProcessTransaction(req);
 }
@@ -488,61 +473,6 @@ return;
 }
 handler(RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>());
 }
-void Falcon_stub::async_get_deadzone_feedback_enabled(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout)
-{
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> m=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertyGetReq,"deadzone_feedback_enabled");
-AsyncProcessTransaction(m,boost::bind(&Falcon_stub::rrend_get_deadzone_feedback_enabled, RobotRaconteur::rr_cast<Falcon_stub>(shared_from_this()),_1,_2,rr_handler ),rr_timeout);
-}
-void Falcon_stub::rrend_get_deadzone_feedback_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (int32_t ,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler)
-{
-if (err)
-{
-handler(0,err);
-return;
-}
-if (m->Error != RobotRaconteur::MessageErrorType_None)
-{
-handler(0,RobotRaconteur::RobotRaconteurExceptionUtil::MessageEntryToException(m));
-return;
-}
-int32_t rr_ret;
-try
-{
-RR_SHARED_PTR<RobotRaconteur::MessageElement> me=m->FindElement("value");
-rr_ret=RobotRaconteur::RRArrayToScalar<int32_t >(me->CastData<RobotRaconteur::RRArray<int32_t > >());
-}
-catch (RobotRaconteur::RobotRaconteurException& err)
-{
-handler(0,RobotRaconteur::RobotRaconteurExceptionUtil::DownCastException(err));
-return;
-}
-catch (std::exception& err)
-{
-handler(0,RR_MAKE_SHARED<RobotRaconteur::RobotRaconteurRemoteException>(std::string(typeid(err).name()),err.what()));
-return;
-}
-handler(rr_ret, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>());
-}
-void Falcon_stub::async_set_deadzone_feedback_enabled(int32_t value,boost::function<void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout)
-{
-RR_SHARED_PTR<RobotRaconteur::MessageEntry> req=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertySetReq,"deadzone_feedback_enabled");
-req->AddElement(RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRaconteur::rr_cast<RobotRaconteur::MessageElementData>(RobotRaconteur::ScalarToRRArray<int32_t >(value))));
-AsyncProcessTransaction(req,boost::bind(&Falcon_stub::rrend_set_deadzone_feedback_enabled, RobotRaconteur::rr_cast<Falcon_stub>(shared_from_this()),_1,_2,rr_handler ),rr_timeout);
-}
-void Falcon_stub::rrend_set_deadzone_feedback_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler)
-{
-if (err)
-{
-handler(err);
-return;
-}
-if (m->Error != RobotRaconteur::MessageErrorType_None)
-{
-handler(RobotRaconteur::RobotRaconteurExceptionUtil::MessageEntryToException(m));
-return;
-}
-handler(RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>());
-}
 void Falcon_stub::async_get_deadzone_size(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout)
 {
 RR_SHARED_PTR<RobotRaconteur::MessageEntry> m=RR_MAKE_SHARED<RobotRaconteur::MessageEntry>(RobotRaconteur::MessageEntryType_PropertyGetReq,"deadzone_size");
@@ -706,21 +636,6 @@ mr->AddElement(RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRacon
 return mr;
 }
 }
-if (m->MemberName == "deadzone_feedback_enabled")
-{
-if (async_obj)
-{
-RR_WEAK_PTR<falcon_service::Falcon_skel> wp=RobotRaconteur::rr_cast<falcon_service::Falcon_skel>(shared_from_this());
-async_obj->async_get_deadzone_feedback_enabled(boost::bind(&falcon_service::Falcon_skel::rr_get_deadzone_feedback_enabled,wp,_1,_2,m,RobotRaconteur::ServerEndpoint::GetCurrentEndpoint()));
-return RR_SHARED_PTR<RobotRaconteur::MessageEntry>();
-}
-else
-{
-int32_t value=get_obj()->get_deadzone_feedback_enabled();
-mr->AddElement(RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRaconteur::rr_cast<RobotRaconteur::MessageElementData>(RobotRaconteur::ScalarToRRArray<int32_t >(value))));
-return mr;
-}
-}
 if (m->MemberName == "deadzone_size")
 {
 if (async_obj)
@@ -800,21 +715,6 @@ return RR_SHARED_PTR<RobotRaconteur::MessageEntry>();
 else
 {
 get_obj()->set_deadzone_enabled(value);
-return mr;
-}
-}
-if (m->MemberName == "deadzone_feedback_enabled")
-{
-int32_t value=RobotRaconteur::RRArrayToScalar<int32_t >(m->FindElement("value")->CastData<RobotRaconteur::RRArray<int32_t > >());
-if (async_obj)
-{
-RR_WEAK_PTR<falcon_service::Falcon_skel> wp=RobotRaconteur::rr_cast<falcon_service::Falcon_skel>(shared_from_this());
-async_obj->async_set_deadzone_feedback_enabled(value,boost::bind(&RobotRaconteur::ServiceSkel::EndAsyncCallSetProperty,wp,_1,m,RobotRaconteur::ServerEndpoint::GetCurrentEndpoint()));
-return RR_SHARED_PTR<RobotRaconteur::MessageEntry>();
-}
-else
-{
-get_obj()->set_deadzone_feedback_enabled(value);
 return mr;
 }
 }
@@ -906,29 +806,6 @@ EndAsyncCallGetProperty(skel,RR_SHARED_PTR<RobotRaconteur::MessageElement>(),RR_
 }
 }
 void Falcon_skel::rr_get_deadzone_enabled(RR_WEAK_PTR<falcon_service::Falcon_skel> skel,int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep)
-{
-if(err)
-{
-EndAsyncCallGetProperty(skel,RR_SHARED_PTR<RobotRaconteur::MessageElement>(),err,m, ep);
-return;
-}
-try
-{
-RR_SHARED_PTR<falcon_service::Falcon_skel> skel1=skel.lock();
-if (!skel1) throw std::runtime_error("skel release");
-RR_SHARED_PTR<RobotRaconteur::MessageElement> mr=RR_MAKE_SHARED<RobotRaconteur::MessageElement>("value",RobotRaconteur::rr_cast<RobotRaconteur::MessageElementData>(RobotRaconteur::ScalarToRRArray<int32_t >(value)));
-EndAsyncCallGetProperty(skel, mr, err, m,ep);
-}
-catch (RobotRaconteur::RobotRaconteurException& err2)
-{
-EndAsyncCallGetProperty(skel,RR_SHARED_PTR<RobotRaconteur::MessageElement>(),RobotRaconteur::RobotRaconteurExceptionUtil::DownCastException(err2),m, ep);
-}
-catch (std::exception& err2)
-{
-EndAsyncCallGetProperty(skel,RR_SHARED_PTR<RobotRaconteur::MessageElement>(),RR_MAKE_SHARED<RobotRaconteur::DataTypeException>(err2.what()),m, ep);
-}
-}
-void Falcon_skel::rr_get_deadzone_feedback_enabled(RR_WEAK_PTR<falcon_service::Falcon_skel> skel,int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep)
 {
 if(err)
 {

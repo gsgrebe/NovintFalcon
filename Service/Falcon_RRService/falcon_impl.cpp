@@ -17,7 +17,6 @@ Falcon_impl::Falcon_impl(void)
 
 	_deadzoneEnabled = true;
 	_deadzoneSize = 20;
-	_deadzoneFeedbackEnabled = false;
 }
 
 
@@ -115,15 +114,6 @@ void Falcon_impl::set_deadzone_enabled(int32_t enabled)
 	_deadzoneEnabled = (enabled > 0 ? true : false);
 }
 
-int32_t Falcon_impl::get_deadzone_feedback_enabled()
-{
-	return (_deadzoneFeedbackEnabled ? 1 : 0);
-}
-
-void Falcon_impl::set_deadzone_feedback_enabled(int32_t enabled)
-{
-	_deadzoneFeedbackEnabled = (enabled > 0 ? true : false);
-}
 
 void Falcon_impl::set_deadzone_size(int32_t percent)
 {

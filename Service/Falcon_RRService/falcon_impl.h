@@ -29,10 +29,6 @@ public:
 	virtual int32_t get_deadzone_enabled();
 	virtual void set_deadzone_enabled(int32_t enabled);
 
-	virtual int32_t get_deadzone_feedback_enabled();
-	virtual void set_deadzone_feedback_enabled(int32_t enable);
-	
-
 	virtual int32_t get_deadzone_size();
 	virtual void set_deadzone_size(int32_t percent);
 
@@ -47,6 +43,5 @@ private:
 	HapticsClass Haptics;
 	bool _deadzoneEnabled;
 	int32_t _deadzoneSize;
-	bool _deadzoneFeedbackEnabled;
 };
 

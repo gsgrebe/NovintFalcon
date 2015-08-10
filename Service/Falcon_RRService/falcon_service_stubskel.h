@@ -87,20 +87,6 @@ virtual void async_set_deadzone_enabled(int32_t value, boost::asio::yield_contex
 }
 #endif
 
-virtual void async_get_deadzone_feedback_enabled(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE) = 0;
-virtual void async_set_deadzone_feedback_enabled(int32_t value,boost::function<void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE) = 0;
-
-#ifdef ROBOTRACONTEUR_USE_ASIO_SPAWN
-virtual int32_t async_get_deadzone_feedback_enabled(boost::asio::yield_context rr_yield, int32_t rr_timeout=RR_TIMEOUT_INFINITE)
-{
-    return RobotRaconteur::detail::async_wrap_for_spawn<int32_t >(boost::bind((void (async_Falcon::*)(boost::function<void (int32_t, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) >, int32_t))&async_Falcon::async_get_deadzone_feedback_enabled, this, _1, rr_timeout), rr_yield);
-}
-virtual void async_set_deadzone_feedback_enabled(int32_t value, boost::asio::yield_context rr_yield, int32_t rr_timeout=RR_TIMEOUT_INFINITE)
-{
-    RobotRaconteur::detail::async_wrap_for_spawn_void(boost::bind((void (async_Falcon::*)(int32_t, boost::function<void(RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>)>, int32_t))&async_Falcon::async_set_deadzone_feedback_enabled, this, boost::ref(value), _1, rr_timeout), rr_yield);
-}
-#endif
-
 virtual void async_get_deadzone_size(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE) = 0;
 virtual void async_set_deadzone_size(int32_t value,boost::function<void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE) = 0;
 
@@ -143,9 +129,6 @@ virtual void set_controller_input(RR_SHARED_PTR<ControllerInput > value);
 virtual int32_t get_deadzone_enabled();
 virtual void set_deadzone_enabled(int32_t value);
 
-virtual int32_t get_deadzone_feedback_enabled();
-virtual void set_deadzone_feedback_enabled(int32_t value);
-
 virtual int32_t get_deadzone_size();
 virtual void set_deadzone_size(int32_t value);
 
@@ -185,13 +168,6 @@ virtual void async_set_deadzone_enabled(int32_t value,boost::function<void (RR_S
 protected:
 virtual void rrend_get_deadzone_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (int32_t ,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler);
 virtual void rrend_set_deadzone_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler);
-public:
-virtual void async_get_deadzone_feedback_enabled(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE);
-virtual void async_set_deadzone_feedback_enabled(int32_t value,boost::function<void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE);
-
-protected:
-virtual void rrend_get_deadzone_feedback_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (int32_t ,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler);
-virtual void rrend_set_deadzone_feedback_enabled(RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, boost::function< void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > handler);
 public:
 virtual void async_get_deadzone_size(boost::function<void (int32_t,RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE);
 virtual void async_set_deadzone_size(int32_t value,boost::function<void (RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException>) > rr_handler, int32_t rr_timeout=RR_TIMEOUT_INFINITE);
@@ -255,7 +231,6 @@ static void rr_get_position(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, RR_SH
 static void rr_get_button_status(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
 static void rr_get_controller_input(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, RR_SHARED_PTR<ControllerInput > value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
 static void rr_get_deadzone_enabled(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
-static void rr_get_deadzone_feedback_enabled(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
 static void rr_get_deadzone_size(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, int32_t value, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
 static void rr_setForce(RR_WEAK_PTR<falcon_service::Falcon_skel> skel, RR_SHARED_PTR<RobotRaconteur::RobotRaconteurException> err, RR_SHARED_PTR<RobotRaconteur::MessageEntry> m, RR_SHARED_PTR<RobotRaconteur::ServerEndpoint> ep);
  public:

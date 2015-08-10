@@ -21,6 +21,5 @@ object Falcon
 	property int32 button_status
 	property ControllerInput controller_input
 	property int32 deadzone_enabled
-	property int32 deadzone_feedback_enabled
 	property int32 deadzone_size
 end object

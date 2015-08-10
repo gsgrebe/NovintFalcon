@@ -38,9 +38,6 @@ virtual void set_controller_input(RR_SHARED_PTR<ControllerInput > value)=0;
 virtual int32_t get_deadzone_enabled()=0;
 virtual void set_deadzone_enabled(int32_t value)=0;
 
-virtual int32_t get_deadzone_feedback_enabled()=0;
-virtual void set_deadzone_feedback_enabled(int32_t value)=0;
-
 virtual int32_t get_deadzone_size()=0;
 virtual void set_deadzone_size(int32_t value)=0;
 

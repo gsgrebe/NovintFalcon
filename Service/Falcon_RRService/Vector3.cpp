@@ -1,5 +1,6 @@
 #include "Vector3.h"
 #include<math.h>
+#include<algorithm>
 
 Vector3::Vector3() : X(0), Y(0), Z(0)
 {
@@ -40,7 +41,7 @@ Vector3  Vector3::Normalize(double threshold, double maxMagnitude)
 
 	double normalizedMagnitude = 0;
 	if (magnitude - threshold > 0){
-		normalizedMagnitude = fmin((magnitude - threshold) / (maxMagnitude - threshold), 1);
+		normalizedMagnitude = std::min((magnitude - threshold) / (maxMagnitude - threshold), 1.0);
 	}
 	return direction * normalizedMagnitude;
 
